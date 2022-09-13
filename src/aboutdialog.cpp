@@ -88,7 +88,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     m_appWebsiteLabel->setOpenExternalLinks(true);
     m_appWebsiteLabel->setText(tr("Code website:") + " " + this->linkWebsite("https://github.com/TomHeaven/indicator-china-weather") + "<br><br>" +
                                tr("UbuntuKylin official website:") + " " + this->linkWebsite("https://www.ubuntukylin.com") + "<br><br>" +
-                               tr("By: TomHeaven @ 2022") + " " + this->linkWebsite("http://tomheaven.cn") + "<br>");
+                               tr("By: TomHeaven @ 2022") + " " + this->linkWebsite("https://tomheaven.cn") + "<br>");
 
     m_descriptionLabel = new QLabel();
     m_descriptionLabel->setStyleSheet("QLabel{border:none;background-color:transparent;color:#808080;font-size:12px;}");

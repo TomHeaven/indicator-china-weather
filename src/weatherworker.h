@@ -62,6 +62,9 @@ public:
 
     void startAutoLocationTask();
 
+    QString convertObserveCode(QString con_code);
+    QString convertForecastCode(QString con_code);
+
 signals:
     void observeDataRefreshed(const ObserveWeather &data);
     void forecastDataRefreshed(const QList<ForecastWeather> &datas, LifeStyle data);

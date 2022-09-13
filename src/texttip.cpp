@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QDebug>
+#include <QPainterPath>
 
 TextTip::TextTip(const QString &txt, QWidget *parent) : QFrame(parent)
   , m_radius(1)

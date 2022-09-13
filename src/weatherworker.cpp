@@ -244,6 +244,22 @@ void WeatherWorker::AccessDedirectUrlWithPost(const QString &redirectUrl)
     connect(reply, &QNetworkReply::finished, this, &WeatherWorker::onPingBackPostReply);
 }
 
+QString WeatherWorker::convertObserveCode(QString con_code) {
+    int code = con_code.toInt();
+    if (code - code/100*100 >= 50) {
+        return QString::number(code-50) + 'n';
+    } else
+        return con_code;
+}
+
+QString WeatherWorker::convertForecastCode(QString con_code) {
+    int code = con_code.toInt();
+    if (code - code/100*100 >= 50) {
+        return QString::number(code-50);
+    } else
+        return con_code;
+}
+
 void WeatherWorker::onWeatherObserveReply()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
@@ -353,7 +369,7 @@ void WeatherWorker::onWeatherObserveReply()
                 m_preferences->weather.city = weatherObj.value("location").toString();
                 m_preferences->weather.updatetime = weatherObj.value("obsTime").toString();
                 m_preferences->weather.cloud = weatherObj.value("cloud").toString();
-                m_preferences->weather.cond_code = weatherObj.value("icon").toString();
+                m_preferences->weather.cond_code = convertForecastCode(weatherObj.value("icon").toString());
                 m_preferences->weather.cond_txt = weatherObj.value("text").toString();
                 m_preferences->weather.fl = weatherObj.value("feelsLike").toString();
                 m_preferences->weather.hum = weatherObj.value("humidity").toString();
@@ -457,8 +473,8 @@ void WeatherWorker::onWeatherForecastReply()
                     //"windSpeedDay":"3","wind360Night":"0","windDirNight":"北风","windScaleNight":"1-2","windSpeedNight":"3","humidity":"56","precip":"0.0","pressure":"1003",
                     //"vis":"25","cloud":"20","uvIndex":"9"}
                     m_preferences->forecast0.forcast_date = forecastObj.value("fxDate").toString();
-                    m_preferences->forecast0.cond_code_d = forecastObj.value("iconDay").toString();
-                    m_preferences->forecast0.cond_code_n = forecastObj.value("iconNight").toString();
+                    m_preferences->forecast0.cond_code_d =  convertForecastCode(forecastObj.value("iconDay").toString());
+                    m_preferences->forecast0.cond_code_n = convertForecastCode(forecastObj.value("iconNight").toString());
                     m_preferences->forecast0.cond_txt_d = forecastObj.value("textDay").toString();
                     m_preferences->forecast0.cond_txt_n = forecastObj.value("textNight").toString();
                     m_preferences->forecast0.hum = forecastObj.value("humidity").toString();

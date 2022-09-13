@@ -24,6 +24,7 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 #include <QGraphicsOpacityEffect>
+#include <QPainterPath>
 
 ToolTip::ToolTip(QWidget *parent) :
     QFrame(parent)

@@ -74,6 +74,7 @@ void ForecastItemWidget::resetForecastData(const ForecastWeather &data, int inde
 
     //darkgrey or lightgrey
     QPixmap pixmap;
+    // qDebug() << "data.cond_code_d " << data.cond_code_d << endl;
     if (m_isDayOrNight) {
         pixmap = QPixmap(QString(":/res/weather_icons/darkgrey/%1.png").arg(data.cond_code_d));
     }
