@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QPixmap>
 #include <QPainter>
+#include <QPainterPath>
 
 CityItemWidget::CityItemWidget(CitySettingData info, QWidget *parent) : QWidget(parent)
 {

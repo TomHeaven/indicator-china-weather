@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint | Qt::Tool);
     this->setFocusPolicy(Qt::StrongFocus);//this->setFocusPolicy(Qt::NoFocus);
     //this->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
-//    this->setAttribute(Qt::WA_TranslucentBackground, true);
+    //this->setAttribute(Qt::WA_TranslucentBackground, true);
     //this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);//ubuntu 16.04 可能需要加上Qt::WindowMinimizeButtonHint，否则showMinimized无效
     this->setWindowTitle(tr("Kylin Weather"));
     //const auto ratio = qApp->devicePixelRatio();
@@ -409,8 +409,8 @@ void MainWindow::initMenuAndTray()
     m_systemTray->setToolTip(QString(tr("Kylin Weather")));
     m_systemTray->setIcon(QIcon::fromTheme("indicator-china-weather", QIcon(":/res/indicator-china-weather.png")));
     connect(m_systemTray,SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-    m_systemTray->show();
     m_systemTray->setContextMenu(m_mainMenu);
+    m_systemTray->show();
 
     QShortcut *m_quitShortCut = new QShortcut(QKeySequence("Ctrl+Q"), this);
     connect(m_quitShortCut, SIGNAL(activated()), qApp, SLOT(quit()));
@@ -478,7 +478,8 @@ void MainWindow::refreshCityActions()
 
 void MainWindow::refreshTrayMenuWeather(const ObserveWeather &data)
 {
-    m_systemTray->setIcon(QIcon(QString(":/res/weather_icons/white/%1.png").arg(data.cond_code)));
+    qDebug() << "data.cond_code " << data.cond_code << endl;
+    m_systemTray->setIcon(QIcon(QString(":/res/weather_icons/tan/%1.png").arg(data.cond_code)));
     m_weatherAction->setText(data.cond_txt);
     m_temperatureAction->setText(QString(tr("Temperature:%1˚C")).arg(data.tmp));
     m_sdAction->setText(QString(tr("Relative humidity:%1")).arg(data.hum));
@@ -511,6 +512,7 @@ void MainWindow::resetWeatherBackgroud(const QString &imgPath)
 
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+    qDebug() << "trayIconActivated" << reason << endl;
     switch(reason) {
     /*case QSystemTrayIcon::DoubleClick:
     {
