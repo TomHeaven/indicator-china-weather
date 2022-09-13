@@ -267,9 +267,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     this->setOpacity(value);
 
-    // TODO: Recover this.
-    //this->setVisible(false);
-    this->setVisible(true);
+    this->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -481,7 +479,7 @@ void MainWindow::refreshCityActions()
 void MainWindow::refreshTrayMenuWeather(const ObserveWeather &data)
 {
     qDebug() << "data.cond_code " << data.cond_code << endl;
-    m_systemTray->setIcon(QIcon(QString(":/res/weather_icons/white/%1.png").arg(data.cond_code)));
+    m_systemTray->setIcon(QIcon(QString(":/res/weather_icons/tan/%1.png").arg(data.cond_code)));
     m_weatherAction->setText(data.cond_txt);
     m_temperatureAction->setText(QString(tr("Temperature:%1˚C")).arg(data.tmp));
     m_sdAction->setText(QString(tr("Relative humidity:%1")).arg(data.hum));

@@ -369,6 +369,7 @@ void WeatherWorker::onWeatherObserveReply()
                 m_preferences->weather.city = weatherObj.value("location").toString();
                 m_preferences->weather.updatetime = weatherObj.value("obsTime").toString();
                 m_preferences->weather.cloud = weatherObj.value("cloud").toString();
+                // TODO: 研究 convertObserveCode 的 DEBUG
                 m_preferences->weather.cond_code = convertForecastCode(weatherObj.value("icon").toString());
                 m_preferences->weather.cond_txt = weatherObj.value("text").toString();
                 m_preferences->weather.fl = weatherObj.value("feelsLike").toString();
@@ -472,26 +473,40 @@ void WeatherWorker::onWeatherForecastReply()
                     //"tempMax":"36","tempMin":"24","iconDay":"100","textDay":"晴","iconNight":"150","textNight":"晴","wind360Day":"0","windDirDay":"北风","windScaleDay":"1-2",
                     //"windSpeedDay":"3","wind360Night":"0","windDirNight":"北风","windScaleNight":"1-2","windSpeedNight":"3","humidity":"56","precip":"0.0","pressure":"1003",
                     //"vis":"25","cloud":"20","uvIndex":"9"}
-                    m_preferences->forecast0.forcast_date = forecastObj.value("fxDate").toString();
-                    m_preferences->forecast0.cond_code_d =  convertForecastCode(forecastObj.value("iconDay").toString());
-                    m_preferences->forecast0.cond_code_n = convertForecastCode(forecastObj.value("iconNight").toString());
-                    m_preferences->forecast0.cond_txt_d = forecastObj.value("textDay").toString();
-                    m_preferences->forecast0.cond_txt_n = forecastObj.value("textNight").toString();
-                    m_preferences->forecast0.hum = forecastObj.value("humidity").toString();
-                    m_preferences->forecast0.mr_ms = forecastObj.value("moonrise").toString()+ " " + forecastObj.value("moonset").toString();
-                    m_preferences->forecast0.pcpn = forecastObj.value("precip").toString();
-                    //m_preferences->forecast0.pop = forecastObj.value("pop0").toString();
-                    m_preferences->forecast0.pres = forecastObj.value("pressure").toString();
-                    m_preferences->forecast0.sr_ss = forecastObj.value("sunrise").toString() + " " + forecastObj.value("sunset").toString();
-                    m_preferences->forecast0.tmp_max = forecastObj.value("tempMax").toString();
-                    m_preferences->forecast0.tmp_min = forecastObj.value("tempMin").toString();
-                    m_preferences->forecast0.uv_index = forecastObj.value("uvIndex").toString();
-                    m_preferences->forecast0.vis = forecastObj.value("vis").toString();
-                    m_preferences->forecast0.wind_deg = forecastObj.value("wind360Day").toString();
-                    m_preferences->forecast0.wind_dir = forecastObj.value("windDirDay").toString();
-                    m_preferences->forecast0.wind_sc = forecastObj.value("windScaleDay").toString();
-                    m_preferences->forecast0.wind_spd = forecastObj.value("windSpeedDay").toString();
-                    forecastDatas.append(m_preferences->forecast0);
+                    ForecastWeather forecast;
+                    forecast.forcast_date = forecastObj.value("fxDate").toString();
+                    forecast.cond_code_d =  convertForecastCode(forecastObj.value("iconDay").toString());
+                    forecast.cond_code_n = convertForecastCode(forecastObj.value("iconNight").toString());
+                    forecast.cond_txt_d = forecastObj.value("textDay").toString();
+                    forecast.cond_txt_n = forecastObj.value("textNight").toString();
+                    forecast.hum = forecastObj.value("humidity").toString();
+                    forecast.mr_ms = forecastObj.value("moonrise").toString()+ " " + forecastObj.value("moonset").toString();
+                    forecast.pcpn = forecastObj.value("precip").toString();
+                    //forecast.pop = forecastObj.value("pop0").toString();
+                    forecast.pres = forecastObj.value("pressure").toString();
+                    forecast.sr_ss = forecastObj.value("sunrise").toString() + " " + forecastObj.value("sunset").toString();
+                    forecast.tmp_max = forecastObj.value("tempMax").toString();
+                    forecast.tmp_min = forecastObj.value("tempMin").toString();
+                    forecast.uv_index = forecastObj.value("uvIndex").toString();
+                    forecast.vis = forecastObj.value("vis").toString();
+                    forecast.wind_deg = forecastObj.value("wind360Day").toString();
+                    forecast.wind_dir = forecastObj.value("windDirDay").toString();
+                    forecast.wind_sc = forecastObj.value("windScaleDay").toString();
+                    forecast.wind_spd = forecastObj.value("windSpeedDay").toString();
+                    switch (i) {
+                        case 0:
+                          m_preferences->forecast0 = forecast;
+                          break;
+                        case 1:
+                          m_preferences->forecast1 = forecast;
+                          break;
+                        case 2:
+                          m_preferences->forecast2 = forecast;
+                          break;
+                        default:
+                          break;
+                    }
+                    forecastDatas.append(forecast);
                 }
             }
         } else {
